@@ -5,3 +5,6 @@ jupyter
 tensorflow
 sklearn
 pandas
+nltk
+spacy
+gensim
