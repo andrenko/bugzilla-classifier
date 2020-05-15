@@ -109,7 +109,7 @@ def plot_table(data, rows, columns):
 
     table = ax.table(cellText=df.values, rowLabels=rows, colLabels=df.columns, loc='center', cellLoc='center')
     table.auto_set_font_size(False)
-    table.set_fontsize(7)
+    table.set_fontsize(25)
     table.auto_set_column_width(col=list(range(len(df.columns))))
     fig.tight_layout()
 

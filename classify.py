@@ -18,8 +18,8 @@ from keras_neural_networks import KerasNeuralNetwork
 df = pd.read_csv('bugs-2019-11-25.csv')
 # Make target lables from product and component values while dropping labels that have less than 10 occurencies
 df['target'] = df[['Product', 'Component']].apply(' -- '.join, axis=1)
-df['target'] = df['target'].astype('category')
 df = df.groupby('target').filter(lambda x: len(x) > 50)
+df['target'] = df['target'].astype('category')
 df['target_labels'] = df['target'].cat.codes
 
 # Check that there are no missing summaries
@@ -176,14 +176,14 @@ f1_score_dnn = f1_score(y_test, predicted, average='micro')
 # and recall (True Positives/(True Positives + False Negatives)). It is created by finding the harmonic mean of
 # precision and recall. F1 = 2 * (precision * recall) / (precision + recall)
 all_f1_scores = [f1_score_nb, f1_score_svm, f1_score_MLP, f1_score_bagging, f1_score_boosting, f1_score_decision_tree,
-            f1_score_knn, f1_score_random_forest, f1_score_cnn, f1_score_cnn_word2vec_trainable,
-            f1_score_cnn_word2vec_nontrainable, f1_score_lstm, f1_score_dnn]
+                 f1_score_knn, f1_score_random_forest, f1_score_cnn, f1_score_cnn_word2vec_trainable,
+                 f1_score_cnn_word2vec_nontrainable, f1_score_lstm, f1_score_dnn]
 column_names = ['Naive Bayes', 'SVM', 'MLP', 'Bagging', 'Boosting', 'Decision tree', 'KNN', 'Random forest', 'CNN',
-            'CNN_w2v_trainable', 'CNN_w2v_nontrainable', 'LSTM', 'DNN']
+                'CNN_w2v_trainable', 'CNN_w2v_nontrainable', 'LSTM', 'DNN']
 plot_table(all_f1_scores, ['accuracy (f1 score)'], column_names)
 
 # Print roc curves for all output classes of the best performing classifier
 print_roc_curve(y_test=y_test, y_predicted=predicted_svm, number_of_classes=len(set(y)), title='SVM')
 
 # Print classification report for the best performing classifier
-print(classification_report(y_test, predicted_svm))
+print(classification_report(y_test, predicted_svm, target_names=df['target'].cat.categories))
